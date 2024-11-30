@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>لیست‌های دیگر</h1>
+  <button mat-raised-button color="primary" (click)="addList()">افزودن لیست جدید</button>
+
+  <div *ngFor="let list of lists" class="list-container">
+    <h2>{{ list.name }}</h2>
+    <button mat-button color="accent" (click)="addTask(list)">افزودن کار به {{ list.name }}</button>
+    <table mat-table [dataSource]="list.tasks" class="mat-elevation-z8">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>عنوان</th>
+        <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>تاریخ</th>
+        <td mat-cell *matCellDef="let task">{{ task.date }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>عملیات</th>
+        <td mat-cell *matCellDef="let task">
+          <button mat-icon-button color="accent" (click)="editTask(list, task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTask(list, task.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="transferTaskToDaily(task)">
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['title', 'date', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['title', 'date', 'actions']"></tr>
+    </table>
+  </div>
+</div>
